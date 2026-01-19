@@ -9,7 +9,7 @@ def port_scan(target, port):
     try:
         # Create socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(1)
+        sock.settimeout(1) # To avoid waiting indefinitely for unresponsive ports
         
         # Attempt connection
         result = sock.connect_ex((target, port))
@@ -20,6 +20,9 @@ def port_scan(target, port):
             # Try to grab banner if port is open
             try:
                 banner = sock.recv(1024).decode().strip()
+                service=socket.getservbyport(port)
+                if service:
+                    print(f" Service: {service}")
                 if banner:
                     print(f"  Banner: {banner}")
             except:
@@ -39,7 +42,7 @@ def threader():
         q.task_done()
 
 # Main code
-target = "scan.nmap.org"  # Change this to your target
+target = input('Enter target IP or Domain :')# you can type scan.nmap.org for testing
 q = Queue()
 
 # Create and start threads
