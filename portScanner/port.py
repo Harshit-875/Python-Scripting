@@ -39,7 +39,7 @@ def threader():
         q.task_done()
 
 # Main code
-target = "example.com"  # Change this to your target
+target = "scan.nmap.org"  # Change this to your target
 q = Queue()
 
 # Create and start threads
